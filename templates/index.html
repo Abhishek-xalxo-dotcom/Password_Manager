@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Password Manager</title>
+    <style>
+        body {
+            background: #0f172a;
+            color: #e5e7eb;
+            font-family: Arial;
+            text-align: center;
+        }
+        input, button {
+            padding: 10px;
+            margin: 6px;
+            width: 260px;
+        }
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        pre {
+            background: #020617;
+            padding: 12px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>🔐 Password Manager</h2>
+
+<h3>Create Account</h3>
+<input id="reg_user" placeholder="Username"><br>
+<input id="reg_pass" type="password" placeholder="Password"><br>
+<button onclick="register()">Register</button>
+
+<h3>Login</h3>
+<input id="log_user" placeholder="Username"><br>
+<input id="log_pass" type="password" placeholder="Password"><br>
+<button onclick="login()">Login</button>
+
+<pre id="output"></pre>
+
+<script>
+async function register() {
+    const res = await fetch("/register", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            username: reg_user.value,
+            password: reg_pass.value
+        })
+    });
+    output.textContent = JSON.stringify(await res.json(), null, 2);
+}
+
+async function login() {
+    const res = await fetch("/login", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            username: log_user.value,
+            password: log_pass.value
+        })
+    });
+    output.textContent = JSON.stringify(await res.json(), null, 2);
+}
+</script>
+
+</body>
+</html>
